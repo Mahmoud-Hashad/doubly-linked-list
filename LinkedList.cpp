@@ -1,20 +1,16 @@
-
 #include <iostream>
-
 using namespace std;
 
 template <class T>
 class LinkedList
 {
-
     class Node
     {
     public:
         T value;
         Node* next;
         Node* previous;
-        
-        
+               
         Node(T value, Node* nextNode, Node* prevNode)
         {
             this.value = value;
@@ -27,7 +23,6 @@ class LinkedList
                 prevNode->next = this;
         }
 
-
         // make sure that structure of linked list is not broken
         // after delete this node
         ~Node()
@@ -37,7 +32,6 @@ class LinkedList
             if(previous)
                 previous->next = this->next;
         }
-
         
         void switchNextPrev()
         {
@@ -46,12 +40,11 @@ class LinkedList
             previous = temp;
         }
     };
-    // head point to the first node in the linked list
-    // tail point to the last node in the linked list
-    Node  *head, *tail;
+    // head => first node
+    // tail => last node 
+    Node  *head, *tail
     int size;
-    
-    
+        
     Node* getNodeByIndex(int index)
     {
         if(!head || index < 0 || index >= size)
@@ -122,8 +115,6 @@ public:
         return getNodeByIndex(index)->value;
     }
 
-    // add node at the first of linked list
-    // value: the data new node will hold
     void addFirst(T value)
     {
         if(isEmpty())
@@ -195,7 +186,7 @@ public:
         return -1;
     }
 
-    // remove the last node in linked list and return the value
+    // remove node in linked list and return its value
     T removeFirst()
     {
         if(isEmpty())
@@ -219,7 +210,7 @@ public:
         return firstNodeValue;
     }
 
-    // remove the last node in linked list and return the value
+    // remove last node in linked list and return its value
     T removeLast()
     {
         if(!head)
