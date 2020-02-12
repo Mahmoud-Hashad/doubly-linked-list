@@ -13,28 +13,22 @@ class LinkedList
         T value;
         Node* next;
         Node* previous;
-
-        // constructor
-        // v : the value node will hold
-        // nextNode: pointer to the next node if exist
-        // PrevNode: pointer to the Previous node if exist
-        Node(T v, Node* nextNode, Node* prevNode)
+        
+        
+        Node(T value, Node* nextNode, Node* prevNode)
         {
-            // initialize data members
-            value = v;
+            this.value = value;
             next = nextNode;
             previous = prevNode;
 
-            // make the next and the previous nodes point to this node
             if(nextNode)
                 nextNode->previous = this;
             if(prevNode)
                 prevNode->next = this;
         }
 
-        // destructor
+
         // make sure that structure of linked list is not broken
-        // by make node point to the correct next and previous node
         // after delete this node
         ~Node()
         {
@@ -44,7 +38,7 @@ class LinkedList
                 previous->next = this->next;
         }
 
-        // switch next and previous
+        
         void switchNextPrev()
         {
             Node* temp = next;
@@ -56,15 +50,13 @@ class LinkedList
     // tail point to the last node in the linked list
     Node  *head, *tail;
     int size;
-
-    // index: represent number of the node started from 0
-    // return pointer to the node at the specific index
-    // throw exception if index is invalid
+    
+    
     Node* getNodeByIndex(int index)
     {
         if(!head || index < 0 || index >= size)
             throw "invalid index";
-
+        
         Node* wantedNode;
         // select from which point to start search head or tail
         if(index < size / 2)
@@ -75,9 +67,6 @@ class LinkedList
         return wantedNode;
     }
 
-    // query: the value that we search for
-    // return: pointer to the first node that hold the same value as query
-    //         or null if no match
     Node* getNodeByValue(T query)
     {
         Node* wantedNode = head;
@@ -85,7 +74,7 @@ class LinkedList
         return wantedNode;
     }
 
-    // switch head and tail
+
     void switchHeadTail ()
     {
         Node* temp = head;
@@ -96,7 +85,6 @@ class LinkedList
 
 public:
 
-    // constructor
     LinkedList()
     {
         head = tail = NULL;
@@ -113,8 +101,7 @@ public:
         return size;
     }
 
-    // return value in the first Node
-    // or throw exception if linked list empty
+
     T first()
     {
         if(isEmpty())
@@ -122,15 +109,14 @@ public:
         return head->value;
     }
 
-    // return value in the last Node
-    // or throw exception if linked list empty
+
     T last()
     {
         if(isEmpty())
             throw "empty linked list";
         return tail->value;
     }
-    // return value in the specific index
+
     T at(int index)
     {
         return getNodeByIndex(index)->value;
@@ -152,8 +138,7 @@ public:
         size++;
     }
 
-    // add node at the end
-    // value: the data new node will hold
+
     void addLast(T value)
     {
         if(isEmpty())
@@ -168,11 +153,7 @@ public:
         size++;
     }
 
-    // add new element at specific position
-    // index: position of new node start from zero
-    // value: data new node will hold
-    // return: true if inserted
-    //         or false if not
+
     bool insert(int index, T value)
     {
         if((!head && index != 0) || index < 0 || index > size)
@@ -197,17 +178,14 @@ public:
         return true;
     }
 
-    // check if linked list contain element or not
+
     bool contains(T element)
     {
         return getNodeByValue(element);
     }
 
 
-    // element: the data we want to find
-    // return: first position
-    //         that contain data matches element
-    //         or -1 if no node contain element
+   
     int indexOf(T element)
     {
         Node* currentNode = head;
@@ -217,13 +195,11 @@ public:
         return -1;
     }
 
-    // remove the first node in linked list
-    // return the data where hold by the first node
-    // throw exception if linked list empty
+    // remove the last node in linked list and return the value
     T removeFirst()
     {
         if(isEmpty())
-            throw "no element to remove empty LinkedList";
+            throw "empty LinkedList";
 
         T firstNodeValue = head->value;
 
@@ -243,13 +219,11 @@ public:
         return firstNodeValue;
     }
 
-    // remove the last node in linked list
-    // return the data where hold by the last node
-    // throw exception if linked list empty
+    // remove the last node in linked list and return the value
     T removeLast()
     {
         if(!head)
-            throw "no element to remove empty LinkedList";
+            throw "Empty LinkedList";
 
         T lastNodeValue = tail->value;
 
@@ -262,7 +236,6 @@ public:
         {
             tail = tail->previous;
             delete tail->next;
-            //tail->next  = NULL;
         }
 
         size--;
@@ -270,10 +243,7 @@ public:
         return lastNodeValue;
     }
 
-    // element: the data we want to delete
-    // delete first node contain data equal to element
-    // return: true if deleted
-    //        false if not
+
     bool remove(T element)
     {
         Node* selectedNode = getNodeByValue(element);
@@ -291,12 +261,6 @@ public:
         return true;
     }
 
-    // index: position of node start from 0
-    // element: new data the node will hold
-    // change data in node at specific index
-    // to element
-    // return: true if changed
-    //         false if not
     bool update(int index, T element)
     {
         try
@@ -312,14 +276,12 @@ public:
 
     void reverse()
     {
-        // switch head and tail of linked list
         switchHeadTail();
 
         // loop over each node and switch next and previous
         for(Node* i = head; i; i->switchNextPrev(), i = i->next);
     }
 
-    // delete all nodes in linked list
     void clear()
     {
         for(Node* t; head;)
